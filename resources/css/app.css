@@ -37,6 +37,22 @@
     [x-cloak] {
         display: none !important;
     }
+
+    .landing-nav-link {
+        @apply text-sm text-neutral-400 transition hover:text-white;
+    }
+
+    .landing-nav-link-active {
+        @apply text-white;
+    }
+
+    .landing-btn-primary {
+        @apply rounded-md bg-neutral-200 px-4 py-2 text-sm font-semibold text-black transition hover:bg-white;
+    }
+
+    .landing-btn-secondary {
+        @apply rounded-md border border-neutral-700 px-4 py-2 text-sm font-medium text-neutral-300 transition hover:border-neutral-500 hover:text-white;
+    }
 }
 
 @keyframes auth-fade-up {

@@ -1,11 +1,16 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/about', [PageController::class, 'about'])->name('about');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resource('tickets', TicketController::class);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
