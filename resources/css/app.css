@@ -29,6 +29,14 @@
     .auth-link {
         @apply font-medium text-white hover:underline;
     }
+
+    .dash-card {
+        @apply rounded-lg border border-neutral-800 bg-neutral-900/50 p-6;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
 }
 
 @keyframes auth-fade-up {
