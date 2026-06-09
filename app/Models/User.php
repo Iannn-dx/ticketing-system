@@ -68,4 +68,12 @@ class User extends Authenticatable
             ? route('admin.dashboard', absolute: false)
             : route('dashboard', absolute: false);
     }
+
+    public function tickets(){
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }
