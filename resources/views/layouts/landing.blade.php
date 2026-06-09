@@ -37,7 +37,7 @@
                                 Log in
                             </a>
                             <a href="{{ route('register') }}" class="landing-btn-primary">
-                                Get Started
+                                Create Account
                             </a>
                         @endauth
                     </nav>

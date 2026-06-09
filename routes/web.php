@@ -13,6 +13,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('tickets', TicketController::class);
 });
 
+Route::get('/admin/tickets', [TicketController::class, 'adminIndex']);
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'user'])->name('dashboard');
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])->middleware('admin')->name('admin.dashboard');
