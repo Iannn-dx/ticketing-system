@@ -12,7 +12,7 @@
         <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div class="dash-card">
                 <p class="text-sm text-neutral-400">My Open Tickets</p>
-                <p class="mt-2 text-3xl font-semibold text-white">0</p>
+                <p class="mt-2 text-3xl font-semibold text-white">{{ $open }}</p>
             </div>
             <div class="dash-card">
                 <p class="text-sm text-neutral-400">In Progress</p>

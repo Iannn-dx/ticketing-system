@@ -8,7 +8,7 @@
             <h2 class="text-lg font-semibold text-white">New support ticket</h2>
             <p class="mt-1 text-sm text-neutral-400">Describe your issue and we'll get back to you.</p>
 
-            <form method="POST" action="{{ route('tickets.store') }}" class="mt-6 space-y-5">
+            <form method="POST" action="{{ route('tickets.store') }}" class="mt-6 space-y-5" enctype="multipart/form-data">
                 @csrf
 
                 <div>
