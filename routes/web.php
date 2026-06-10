@@ -4,7 +4,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\Admin\TicketController as AdminTicketController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
@@ -15,10 +18,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 // dashboard folder
-Route::get('/admin/tickets', [TicketController::class, 'adminIndex'])
-->name('admin.tickets.index');
-Route::get('/admin/users', [UserController::class, 'adminIndex'])
-->name('admin.users.index');
+// Route::get('/admin/tickets', [TicketController::class, 'admin.index'])
+// ->name('admin.tickets.index');
+// Route::get('/admin/users', [UserController::class, 'admin.index'])
+// ->name('admin.users.index');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('tickets', AdminTicketController::class);
+    Route::resource('users', AdminUserController::class);
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'user'])->name('dashboard');

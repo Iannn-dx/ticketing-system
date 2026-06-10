@@ -69,6 +69,11 @@ class User extends Authenticatable
             : route('dashboard', absolute: false);
     }
 
+     public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function tickets(){
         return $this->hasMany(Ticket::class);
     }

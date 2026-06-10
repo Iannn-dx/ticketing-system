@@ -28,13 +28,24 @@
                                 </td>
                                 {{-- href="{{ route('admin.tickets.show', $ticket) }} --}}
                                 <td class="px-6 py-4">
-                                    <a href="#" class="text-neutral-400 hover:text-white">
+                                    <a href="/admin/tickets/{{ $ticket['id'] }}"
+                                        class="text-neutral-400 hover:text-white">
                                         {{ $ticket->subject }}
                                     </a>
                                 </td>
                                 <td class="px-6 py-4">{{ $ticket->created_at->format('M j, Y') }}</td>
                                 <td class="px-6 py-4 capitalize">{{ $ticket->priority }}</td>
-                                <td class="px-6 py-4 capitalize">{{ $ticket->status }}</td>
+                                <td>
+                                    @php
+                                        $status = $ticket->status;
+                                    @endphp
+
+                                    <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-full text-white">
+
+                                    </span>
+                                </td>
+
+                                {{-- <td class="px-6 py-4 capitalize">{{ $ticket->status }}</td> --}}
                                 <td class="px-6 py-4 capitalize">{{ $ticket->created_at->format('M j, Y') }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-end gap-2">
@@ -79,7 +90,6 @@
                                                                 Delete
                                                             </button>
                                                         </form>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,6 +100,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="px-4 py-3">
+                    {{ $tickets->links() }}
+                </div>
             </div>
         </div>
     </div>

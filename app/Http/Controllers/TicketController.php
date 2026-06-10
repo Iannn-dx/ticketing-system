@@ -83,9 +83,17 @@ class TicketController extends Controller
     }
 
     // admin view
-    public function adminIndex(): View{
-        $tickets = Ticket::latest()->get();
 
-        return view('admin.tickets.index', compact('tickets'));
-    }
+    // public function show(Ticket $ticket): View
+    // {
+    //     $this->authorizeOwner($ticket);
+
+    //     return view('tickets.show', compact('ticket'));
+    // }
+
+    // public function showAdmin(Ticket $ticket){
+    //     $this->authorizeOwner($ticket);
+
+    //     return view('admin.tickets.show', compact('ticket'));
+    // }
 }
