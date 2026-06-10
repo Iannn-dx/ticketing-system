@@ -35,17 +35,22 @@
                                 </td>
                                 <td class="px-6 py-4">{{ $ticket->created_at->format('M j, Y') }}</td>
                                 <td class="px-6 py-4 capitalize">{{ $ticket->priority }}</td>
-                                <td>
+                                <td class="px-6 py-4">
                                     @php
                                         $status = $ticket->status;
                                     @endphp
 
-                                    <span class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-full text-white">
-
+                                    <span
+                                        class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-full text-white
+                                        @if ($status === 'open') bg-green-700
+                                        @elseif($status === 'in_progress') bg-blue-700
+                                        @elseif($status === 'closed') bg-red-700
+                                        @else bg-gray-700 @endif
+                                        ">
+                                        {{ str_replace('_', ' ', $status) }}
                                     </span>
                                 </td>
 
-                                {{-- <td class="px-6 py-4 capitalize">{{ $ticket->status }}</td> --}}
                                 <td class="px-6 py-4 capitalize">{{ $ticket->created_at->format('M j, Y') }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-end gap-2">
