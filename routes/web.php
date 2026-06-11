@@ -18,18 +18,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('tickets', TicketController::class);
 });
 
-// Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])
-//     ->name('comments.store');
-
 // Route::resource('comments', CommentController::class);
 Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])
     ->name('comments.store');
-
-// dashboard folder
-// Route::get('/admin/tickets', [TicketController::class, 'admin.index'])
-// ->name('admin.tickets.index');
-// Route::get('/admin/users', [UserController::class, 'admin.index'])
-// ->name('admin.users.index');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('tickets', AdminTicketController::class);

@@ -85,6 +85,9 @@
                         </p>
                     @endforelse
                 </div>
+                <x-input-error :messages="$errors->get('comment')" class="mt-1">
+
+                </x-input-error>
             </div>
         </div>
 

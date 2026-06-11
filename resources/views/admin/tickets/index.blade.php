@@ -4,6 +4,12 @@
     </x-slot>
 
     <div class="mx-auto max-w-7xl space-y-7">
+        @if (session('status'))
+            <div class="rounded-md border border-green-800 bg-green-950 px-4 py-3 text-sm text-green-400">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <div class="dash-card overflow-hidden p-0">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
@@ -54,7 +60,7 @@
                                 <td class="px-6 py-4 capitalize">{{ $ticket->created_at->format('M j, Y') }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center justify-end gap-2">
-                                        <a href="{{ route('tickets.edit', $ticket) }}" title="Edit ticket"
+                                        <a href="{{ route('admin.tickets.edit', $ticket) }}" title="Edit ticket"
                                             class="inline-flex items-center justify-center rounded-md p-2 text-neutral-400 transition hover:bg-neutral-800 hover:text-white">
                                             <span class="sr-only">Edit</span>
                                             <i data-lucide="pencil" class="h-4 w-4"></i>
