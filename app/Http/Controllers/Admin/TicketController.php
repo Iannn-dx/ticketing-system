@@ -42,5 +42,19 @@ class TicketController extends Controller
         return redirect()->route('admin.tickets.index')->with('status', 'Ticket updated successfully.');
     }
 
+    public function destroy(Ticket $ticket): RedirectResponse{
+        $ticket->delete();
+        return redirect()->route('admin.tickets.index')->with('status', 'Ticket deleted successfully');
+    }
+
+    //     public function destroy(Ticket $ticket): RedirectResponse
+    // {
+    //     $this->authorizeOwner($ticket);
+
+    //     $ticket->delete();
+
+    //     return redirect()->route('tickets.index')->with('status', 'Ticket deleted successfully.');
+    // }
+
 
 }

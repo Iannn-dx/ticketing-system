@@ -104,6 +104,22 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div
+                        class="flex flex-col gap-3 border-t border-neutral-800 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                        <p class="text-sm text-neutral-400">
+                            @if ($tickets->total() > 0)
+                                Showing {{ $tickets->firstItem() }} to {{ $tickets->lastItem() }} of
+                                {{ $tickets->total() }} tickets
+                            @else
+                                No tickets found
+                            @endif
+                        </p>
+                        @if ($tickets->hasPages())
+                            <div class="text-neutral-300">
+                                {{ $tickets->links() }}
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         @endif
