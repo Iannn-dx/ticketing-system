@@ -6,8 +6,9 @@
     <div class="py-6">
         <div class="mx-auto max-w-3xl px-4 space-y-4">
 
-            <a href="{{ route('admin.tickets.index') }}" class=" flex gap-1 align-items-center text-sm text-neutral-400 hover:text-white">
-               <i data-lucide="arrow-left" class="w-7 h-7"></i>
+            <a href="{{ route('admin.tickets.index') }}"
+                class=" flex gap-1 align-items-center text-sm text-neutral-400 hover:text-white">
+                <i data-lucide="arrow-left" class="w-7 h-7"></i>
             </a>
 
             <div class="bg-neutral-900 border border-neutral-800 rounded-lg p-5 space-y-4">
@@ -99,31 +100,51 @@
                 </div>
 
                 <div class="space-y-2">
-
-                    <div class="bg-neutral-800 rounded-md p-3">
-                        <p class="text-xs text-neutral-500">User</p>
-                        <p class="text-sm text-neutral-200">
-                            Still not working after reset.
-                        </p>
-                    </div>
-
-                    <div class="bg-blue-500/10 border border-blue-500/20 rounded-md p-3">
-                        <p class="text-xs text-blue-400">Admin</p>
-                        <p class="text-sm text-neutral-200">
-                            We are checking your account now.
-                        </p>
-                    </div>
+                    @foreach ($ticket->comments as $comment)
+                        @if ($comment->user->role === 'admin')
+                            <div class="bg-blue-500/10 border border-blue-900/20 rounded-md p-3">
+                                <p class="text-xs text-blue-400">
+                                    {{ $comment->user->name }} (Admin)
+                                </p>
+                                <p class="text-sm text-neutral-200">
+                                    {{ $comment->comment }}
+                                </p>
+                            </div>
+                        @else
+                            <div class="bg-neutral-800 rounded-md p-3">
+                                <p class="text-xs text-neutral-400">
+                                    {{ $comment->user->name }}
+                                </p>
+                                <p class="text-sm text-neutral-200">
+                                    {{ $comment->comment }}
+                                </p>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
 
                 <div class="pt-2">
-                    <textarea rows="4" placeholder="Write a reply..."
-                        class="w-full rounded-md bg-neutral-800 border border-neutral-700 text-white text-sm p-3 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
+                    <form action="{{ route('comments.store', $ticket) }}" method="POST">
+                        @csrf
 
-                    <div class="flex justify-end mt-2">
-                        <button class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-md">
-                            Send Reply
-                        </button>
-                    </div>
+                        <textarea name="comment" rows="4" placeholder="Write a reply..."
+                            class="w-full rounded-md bg-neutral-800 border border-neutral-700 text-white text-sm p-3 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            required></textarea>
+                            <x-input-error :messages="$errors->get('comment')" class="mt-1">
+
+                            </x-input-error>
+
+                        <div class="flex justify-end mt-2">
+                            <button type="submit"
+                                class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-md">
+                                Send Reply
+                            </button>
+                        </div>
+
+                        <div>
+
+                        </div>
+                    </form>
                 </div>
 
             </div>

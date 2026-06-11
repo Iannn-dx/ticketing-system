@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\CommentController;
 
 use App\Http\Controllers\Admin\TicketController as AdminTicketController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -16,6 +17,13 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('tickets', TicketController::class);
 });
+
+// Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])
+//     ->name('comments.store');
+
+// Route::resource('comments', CommentController::class);
+Route::post('/tickets/{ticket}/comments', [CommentController::class, 'store'])
+    ->name('comments.store');
 
 // dashboard folder
 // Route::get('/admin/tickets', [TicketController::class, 'admin.index'])

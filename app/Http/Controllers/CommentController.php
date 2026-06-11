@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
+use App\Models\Ticket;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 
@@ -26,9 +28,20 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+  public function store(Request $request, Ticket $ticket): RedirectResponse
     {
-        //
+        $request->validate([
+            'comment' => ['required', 'string', 'max:25'],
+        ],
+        ['comment.max' => 'Comment must not exceed 25 characters.',]
+        );
+
+        $ticket->comments()->create([
+            'user_id' => auth()->id(),
+            'comment' => $request->comment,
+        ]);
+
+        return back()->with('success', 'Reply sent.');
     }
 
     /**

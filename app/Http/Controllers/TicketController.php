@@ -81,19 +81,4 @@ class TicketController extends Controller
     {
         abort_unless($ticket->user_id === auth()->id(), 403);
     }
-
-    // admin view
-
-    // public function show(Ticket $ticket): View
-    // {
-    //     $this->authorizeOwner($ticket);
-
-    //     return view('tickets.show', compact('ticket'));
-    // }
-
-    // public function showAdmin(Ticket $ticket){
-    //     $this->authorizeOwner($ticket);
-
-    //     return view('admin.tickets.show', compact('ticket'));
-    // }
 }

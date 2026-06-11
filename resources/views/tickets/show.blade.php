@@ -36,6 +36,56 @@
                 <p class="text-xs uppercase tracking-wide text-neutral-500">Submitted</p>
                 <p class="mt-1 text-neutral-400">{{ $ticket->created_at->format('M j, Y g:i A') }}</p>
             </div>
+
+            <div>
+                <form action="{{ route('comments.store', $ticket) }}" method="POST" class="mt-4">
+                    @csrf
+
+                    <textarea name="comment" rows="3" class="w-full rounded-md border border-neutral-700 bg-neutral-900 text-white"
+                        placeholder="Write a reply..." required></textarea>
+
+                    <button type="submit"
+                        class="mt-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500">
+                        Send Reply
+                    </button>
+                </form>
+
+                <p class="text-xs uppercase tracking-wide text-neutral-500 mt-5">Conversation</p>
+
+                <div class="mt-3 space-y-2">
+                    @forelse ($ticket->comments as $comment)
+                        @if ($comment->user?->role === 'admin')
+                            <div class="bg-blue-500/10 border border-blue-500/20 rounded-md p-3">
+                                <p class="text-xs text-blue-400">
+                                    {{ $comment->user->name }} (Admin)
+                                </p>
+                                <p class="mt-1 text-sm text-neutral-200">
+                                    {{ $comment->comment }}
+                                </p>
+                                <p class="mt-2 text-xs text-neutral-500">
+                                    {{ $comment->created_at->format('M j, Y g:i A') }}
+                                </p>
+                            </div>
+                        @else
+                            <div class="bg-neutral-800 rounded-md p-3">
+                                <p class="text-xs text-neutral-500">
+                                    {{ $comment->user?->name }}
+                                </p>
+                                <p class="mt-1 text-sm text-neutral-200">
+                                    {{ $comment->comment }}
+                                </p>
+                                <p class="mt-2 text-xs text-neutral-500">
+                                    {{ $comment->created_at->format('M j, Y g:i A') }}
+                                </p>
+                            </div>
+                        @endif
+                    @empty
+                        <p class="text-sm text-neutral-500">
+                            No replies yet.
+                        </p>
+                    @endforelse
+                </div>
+            </div>
         </div>
 
         <div class="flex flex-wrap items-center justify-between gap-4">
@@ -91,5 +141,5 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 </x-app-layout>
