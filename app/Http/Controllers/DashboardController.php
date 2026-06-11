@@ -35,11 +35,19 @@ class DashboardController extends Controller
 
         $open = Ticket::where('status', 'open')->count();
         $closed = Ticket::where('status', 'closed')->count();
+        $in_progress = Ticket::where('status', 'in_progress')->count();
         $total = Ticket::count();
         $totalUser = User::count();
+        $tickets = Ticket::latest()->take(5)->get();
 
-        return view('dashboard.admin', compact('open', 'closed', 'total', 'totalUser'));
+        return view('dashboard.admin', compact('open', 'closed', 'in_progress', 'total', 'totalUser', 'tickets'));
     }
+
+    // public function index(){
+    //     $tickets = Ticket::latest()->take(5)->get();
+
+    //     return view('dashboard.admin', compact('tickets'));
+    // }
 
 
 }
