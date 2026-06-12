@@ -11,7 +11,8 @@ class TicketController extends Controller
 {
     public function index(): View
     {
-        $tickets = auth()->user()->tickets()->latest()->get();
+        $tickets = auth()->user()->tickets()->latest()->paginate(10);
+        
 
         return view('tickets.index', compact('tickets'));
     }
@@ -30,7 +31,7 @@ class TicketController extends Controller
             'status' => Ticket::STATUS_OPEN,
         ]);
 
-        return redirect()->route('tickets.index')->with('status', 'Ticket created successfully.');
+        return redirect()->route('tickets.index')->with('success', 'Ticket created successfully.');
     }
 
     public function show(Ticket $ticket): View
@@ -53,7 +54,7 @@ class TicketController extends Controller
 
         $ticket->update($request->validate($this->ticketRules()));
 
-        return redirect()->route('tickets.show', $ticket)->with('status', 'Ticket updated successfully.');
+        return redirect()->route('tickets.show', $ticket)->with('updated', 'Ticket updated successfully.');
     }
 
     public function destroy(Ticket $ticket): RedirectResponse
@@ -62,7 +63,7 @@ class TicketController extends Controller
 
         $ticket->delete();
 
-        return redirect()->route('tickets.index')->with('status', 'Ticket deleted successfully.');
+        return redirect()->route('tickets.index')->with('deleted', 'Ticket deleted successfully.');
     }
 
     /**

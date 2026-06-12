@@ -4,12 +4,6 @@
     </x-slot>
 
     <div class="mx-auto max-w-6xl space-y-6">
-        @if (session('status'))
-            <div class="rounded-md border border-green-800 bg-green-950/50 px-4 py-3 text-sm text-green-400">
-                {{ session('status') }}
-            </div>
-        @endif
-
         <div class="flex items-center justify-between">
             <p class="text-sm text-neutral-400">View and manage your support tickets.</p>
             <a href="{{ route('tickets.create') }}"

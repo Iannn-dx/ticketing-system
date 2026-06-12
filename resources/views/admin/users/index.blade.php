@@ -4,11 +4,6 @@
     </x-slot>
 
     <div class="mx-auto max-w-7xl space-y-7">
-         @if (session('status'))
-            <div class="rounded-md border border-green-800 bg-green-950 px-4 py-3 text-sm text-green-400">
-                {{ session('status') }}
-            </div>
-        @endif
         <div class="dash-card overflow-hidden p-0">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">

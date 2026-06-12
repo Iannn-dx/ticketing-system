@@ -16,26 +16,49 @@
             </div>
             <div class="dash-card">
                 <p class="text-sm text-neutral-400">In Progress</p>
-                <p class="mt-2 text-3xl font-semibold text-white">0</p>
+                <p class="mt-2 text-3xl font-semibold text-white">{{ $in_progress }}</p>
             </div>
             <div class="dash-card">
                 <p class="text-sm text-neutral-400">Resolved</p>
-                <p class="mt-2 text-3xl font-semibold text-white">0</p>
+                <p class="mt-2 text-3xl font-semibold text-white">{{ $resolved }}</p>
             </div>
         </div>
 
         <div class="grid gap-6 lg:grid-cols-3">
             <div class="dash-card lg:col-span-2">
                 <h3 class="text-sm font-medium text-white">My Recent Tickets</h3>
-                <div
-                    class="mt-6 flex flex-col items-center justify-center rounded-md border border-dashed border-neutral-800 py-12 text-center">
-                    <svg class="mb-3 h-10 w-10 text-neutral-700" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                            d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
-                    </svg>
-                    <p class="text-sm text-neutral-400">No tickets yet</p>
-                    <p class="mt-1 text-xs text-neutral-600">Create a ticket to get support.</p>
+
+                <div class="mt-6 space-y-3">
+                    @forelse ($tickets as $ticket)
+                        <a href="{{ route('tickets.show', $ticket) }}"
+                            class="block rounded-md border border-neutral-800 bg-neutral-900 p-4 hover:bg-neutral-800 transition">
+
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm font-medium text-white">
+                                    {{ $ticket->subject }}
+                                </p>
+
+                                <span class="text-xs text-neutral-500">
+                                    {{ $ticket->created_at->format('M j, Y') }}
+                                </span>
+                            </div>
+
+                            <p class="mt-1 text-xs text-neutral-400 capitalize">
+                                {{ str_replace('_', ' ', $ticket->status) }}
+                            </p>
+                        </a>
+                    @empty
+                        <div
+                            class="flex flex-col items-center justify-center rounded-md border border-dashed border-neutral-800 py-12 text-center">
+                            <svg class="mb-3 h-10 w-10 text-neutral-700" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                    d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                            </svg>
+                            <p class="text-sm text-neutral-400">No tickets yet</p>
+                            <p class="mt-1 text-xs text-neutral-600">Create a ticket to get support.</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
 

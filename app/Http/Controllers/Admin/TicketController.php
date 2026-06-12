@@ -39,12 +39,12 @@ class TicketController extends Controller
 
         $ticket->update($validated);
 
-        return redirect()->route('admin.tickets.index')->with('status', 'Ticket updated successfully.');
+        return redirect()->route('admin.tickets.index')->with('updated', 'Ticket updated successfully.');
     }
 
     public function destroy(Ticket $ticket): RedirectResponse{
         $ticket->delete();
-        return redirect()->route('admin.tickets.index')->with('status', 'Ticket deleted successfully');
+        return redirect()->route('admin.tickets.index')->with('deleted', 'Ticket deleted successfully');
     }
 
     //     public function destroy(Ticket $ticket): RedirectResponse

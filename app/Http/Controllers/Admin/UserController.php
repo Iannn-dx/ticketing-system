@@ -20,10 +20,12 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
+    
+
     public function destroy(User $user): RedirectResponse{
         $user->delete();
 
-        return redirect()->route('admin.users.index')->with('status', 'User deleted successfully');
+        return redirect()->route('admin.users.index')->with('deleted', 'User deleted successfully');
     }
 
 
