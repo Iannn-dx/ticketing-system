@@ -4,6 +4,13 @@
     </x-slot>
 
     <div class="mx-auto max-w-7xl space-y-7">
+        <div class="flex items-center justify-between">
+            <p class="text-sm text-neutral-400">View and manage accounts.</p>
+            <a href="{{ route('admin.users.create') }}"
+                class="rounded-md bg-neutral-200 px-4 py-2 text-sm font-semibold text-black transition hover:bg-white">
+                Add account
+            </a>
+        </div>
         <div class="dash-card overflow-hidden p-0">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
