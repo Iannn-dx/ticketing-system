@@ -62,7 +62,6 @@
                             <i data-lucide="arrow-left"></i>
                         </button>
 
-                        <!-- IMAGE -->
                         <img :src="image" class="max-h-[70vh] w-auto mx-auto rounded-lg shadow-lg object-contain">
 
                     </div>
@@ -133,7 +132,6 @@
                     class="inline-flex items-center justify-center rounded-md p-2 text-neutral-400 transition hover:bg-neutral-800 hover:text-white">
                     <i data-lucide="pencil" class="h-4 w-4"></i>
                 </a>
-                {{-- delete  --}}
                 <div x-data="{ open: false }" class="inline">
                     <button type="button" @click="open = true" title="Delete ticket"
                         class="inline-flex items-center justify-center rounded-md p-2 text-neutral-400 transition hover:bg-red-950 hover:text-red-400">

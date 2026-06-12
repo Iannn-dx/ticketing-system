@@ -99,6 +99,39 @@
                     </p>
                 </div>
 
+                <div x-data="{ open: false, image: '' }" class="mt-3">
+                    <p class="text-xs uppercase tracking-wide text-neutral-500">
+                        Attachments
+                    </p>
+
+                    <div class="flex items-center justify-between rounded-md border border-neutral-800 bg-neutral-900 px-3 py-2 mt-3 space-y-2">
+                        @forelse ($ticket->attachments as $attachment)
+                            <a href="#" class="flex items-center gap-2 text-blue-400 hover:underline"
+                                @click.prevent="open = true; image = '{{ asset('storage/' . $attachment->file_path) }}'">
+                                <i data-lucide="paperclip" class="h-4 w-4"></i>
+                                {{ $attachment->file_name }}
+                            </a>
+
+                        @empty
+                            <p class="text-sm text-neutral-500">No attachments</p>
+                        @endforelse
+                    </div>
+
+                    <div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+                        <div class="relative max-w-xl w-full p-6">
+
+                            <button @click="open = false" class="absolute top-2 left-2 text-white text-xl">
+                                <i data-lucide="arrow-left"></i>
+                            </button>
+
+                            <img :src="image"
+                                class="max-h-[70vh] w-auto mx-auto rounded-lg shadow-lg object-contain">
+
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="space-y-2">
                     @foreach ($ticket->comments as $comment)
                         @if ($comment->user->role === 'admin')
@@ -130,9 +163,9 @@
                         <textarea name="comment" rows="4" placeholder="Write a reply..."
                             class="w-full rounded-md bg-neutral-800 border border-neutral-700 text-white text-sm p-3 focus:outline-none focus:ring-1 focus:ring-blue-500"
                             required></textarea>
-                            <x-input-error :messages="$errors->get('comment')" class="mt-1">
+                        <x-input-error :messages="$errors->get('comment')" class="mt-1">
 
-                            </x-input-error>
+                        </x-input-error>
 
                         <div class="flex justify-end mt-2">
                             <button type="submit"

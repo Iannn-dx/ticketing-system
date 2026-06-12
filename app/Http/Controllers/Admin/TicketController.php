@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
+use App\Models\Attachment;
 use Illuminate\View\View;
 
 class TicketController extends Controller
@@ -29,18 +30,34 @@ class TicketController extends Controller
     }
 
     public function update(Request $request, Ticket $ticket): RedirectResponse
-    {
-        $validated = $request->validate([
-            'subject' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string', 'max:1000'],
-            'status' => ['required', 'in:open,in_progress,resolved,closed'],
-            // 'priority' => ['required', 'in:low,medium,high,urgent'],
+{
+    $validated = $request->validate([
+        'subject' => ['required', 'string', 'max:255'],
+        'description' => ['required', 'string', 'max:1000'],
+        'status' => ['required', 'in:open,in_progress,resolved,closed'],
+        'attachment' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:5120']
+    ]);
+
+    $ticket->update([
+        'subject' => $validated['subject'],
+        'description' => $validated['description'],
+        'status' => $validated['status'],
+    ]);
+
+    if ($request->hasFile('attachment')) {
+
+        $file = $request->file('attachment');
+        $path = $file->store('attachments', 'public');
+
+        $ticket->attachments()->create([
+            'filename' => $file->getClientOriginalName(),
+            'file_path' => $path,
         ]);
-
-        $ticket->update($validated);
-
-        return redirect()->route('admin.tickets.index')->with('updated', 'Ticket updated successfully.');
     }
+
+    return redirect()
+        ->route('admin.tickets.index')->with('updated', 'Ticket updated successfully.');
+}
 
     public function destroy(Ticket $ticket): RedirectResponse{
         $ticket->delete();
