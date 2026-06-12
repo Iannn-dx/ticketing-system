@@ -31,7 +31,6 @@
                                         {{ $user->id }}
                                     </span>
                                 </td>
-                                {{-- href="{{ route('admin.tickets.show', $ticket) }} --}}
                                 <td class="px-6 py-4">
                                     <a href="#" class="text-neutral-400 hover:text-white">
                                         {{ $user->name }}
