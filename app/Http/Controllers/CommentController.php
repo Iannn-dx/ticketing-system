@@ -41,7 +41,7 @@ class CommentController extends Controller
             'comment' => $request->comment,
         ]);
 
-        return back()->with('success', 'Reply sent.');
+        return back();
     }
 
     /**

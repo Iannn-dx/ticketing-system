@@ -37,6 +37,21 @@
                     <x-input-error :messages="$errors->get('priority')" class="mt-2" />
                 </div>
 
+                <div>
+                    <label for="attachment" class="mb-2 block text-sm font-medium text-white">
+                        Upload Picture of the Problem
+                    </label>
+
+                    <input id="attachment" type="file" name="attachment" accept="image/*"
+                        class="w-full rounded-md border border-neutral-800 bg-neutral-950 px-3 py-2.5 text-sm text-white file:mr-4 file:rounded-md file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-white hover:file:bg-blue-700" />
+
+                    <p class="mt-1 text-xs text-neutral-500">
+                        Accepted formats: JPG, PNG, JPEG (Max 5MB)
+                    </p>
+
+                    <x-input-error :messages="$errors->get('attachment')" class="mt-2" />
+                </div>
+
                 <div class="flex items-center justify-end gap-3 pt-2">
                     <a href="{{ route('tickets.index') }}" class="text-sm text-neutral-400 transition hover:text-white">
                         Cancel

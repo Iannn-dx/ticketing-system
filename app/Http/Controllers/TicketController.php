@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ticket;
+use App\Models\Attachment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -26,10 +27,23 @@ class TicketController extends Controller
     {
         $validated = $request->validate($this->ticketRules());
 
-        auth()->user()->tickets()->create([
-            ...$validated,
+        $ticket = auth()->user()->tickets()->create([
+            'subject' => $validated['subject'],
+            'description' => $validated['description'],
+            'priority' => $validated['priority'],
             'status' => Ticket::STATUS_OPEN,
         ]);
+
+        if($request->hasFile('attachment')){
+            $file = $request->file('attachment');
+            $path = $file->store('attachment', 'public');
+
+            Attachment::create([
+                'ticket_id' => $ticket->id,
+                'file_name' => $file->getClientOriginalName(),
+                'file_path' => $path,
+            ]);
+        }
 
         return redirect()->route('tickets.index')->with('success', 'Ticket created successfully.');
     }
@@ -37,6 +51,8 @@ class TicketController extends Controller
     public function show(Ticket $ticket): View
     {
         $this->authorizeOwner($ticket);
+
+        $ticket->load(['attachments', 'comments.user']);
 
         return view('tickets.show', compact('ticket'));
     }
@@ -75,6 +91,7 @@ class TicketController extends Controller
             'subject' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:1000'],
             'priority' => ['required', 'in:low,medium,high'],
+            'attachment' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:5120']
         ];
     }
 

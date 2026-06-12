@@ -37,6 +37,38 @@
                 <p class="mt-1 text-neutral-400">{{ $ticket->created_at->format('M j, Y g:i A') }}</p>
             </div>
 
+            <div x-data="{ open: false, image: '' }" class="mt-3">
+                <p class="text-xs uppercase tracking-wide text-neutral-500">
+                    Attachments
+                </p>
+
+                <div class="mt-3 space-y-2">
+                    @forelse ($ticket->attachments as $attachment)
+                        <a href="#" class="flex items-center gap-2 text-blue-400 hover:underline"
+                            @click.prevent="open = true; image = '{{ asset('storage/' . $attachment->file_path) }}'">
+                            <i data-lucide="paperclip" class="h-4 w-4"></i>
+                            {{ $attachment->file_name }}
+                        </a>
+
+                    @empty
+                        <p class="text-sm text-neutral-500">No attachments</p>
+                    @endforelse
+                </div>
+
+                <div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+                    <div class="relative max-w-xl w-full p-6">
+
+                        <button @click="open = false" class="absolute top-2 left-2 text-white text-xl">
+                            <i data-lucide="arrow-left"></i>
+                        </button>
+
+                        <!-- IMAGE -->
+                        <img :src="image" class="max-h-[70vh] w-auto mx-auto rounded-lg shadow-lg object-contain">
+
+                    </div>
+                </div>
+            </div>
+
             <div>
                 <form action="{{ route('comments.store', $ticket) }}" method="POST" class="mt-4">
                     @csrf
