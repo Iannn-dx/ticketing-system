@@ -52,7 +52,21 @@
                                     </a>
                                 </td>
                                 <td class="px-6 py-4">{{ $ticket->user->name }}</td>
-                                <td class="px-6 py-4 capitalize">{{ $ticket->priority }}</td>
+                                <td class="px-6 py-4 capitalize"> @php
+                                    $priority = $ticket->priority;
+                                @endphp
+
+                                    <span
+                                        class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-full text-white
+                                                @if ($priority === 'urgent') bg-purple-700
+                                                @elseif($priority === 'high') bg-red-700
+                                                @elseif($priority === 'medium') bg-yellow-700
+                                                @elseif($priority === 'low') bg-green-700
+                                                @else bg-gray-700 @endif
+                                        ">
+                                        {{ str_replace('_', ' ', $priority) }}
+                                    </span>
+                                </td>
                                 <td class="px-6 py-4">
                                     @php
                                         $status = $ticket->status;
