@@ -12,8 +12,22 @@ use Illuminate\View\View;
 class TicketController extends Controller
 {
     //
-    public function index(): View{
-        $tickets = Ticket::latest()->paginate(10);
+    public function index(Request $request): View
+    {
+        $search = $request->input('search');
+
+        $tickets = Ticket::query()
+            ->when($search, function ($query, $search) {
+                $query->where('subject', 'like', "%{$search}%")
+                    ->orWhere('priority', 'like', "%{$search}%")
+                    ->orWhere('status', 'like', "%{$search}%")
+                    ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%");
+                    });
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('admin.tickets.index', compact('tickets'));
     }

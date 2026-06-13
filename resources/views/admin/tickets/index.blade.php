@@ -51,7 +51,7 @@
                                         {{ $ticket->subject }}
                                     </a>
                                 </td>
-                                <td class="px-6 py-4">{{ $ticket->created_at->format('M j, Y') }}</td>
+                                <td class="px-6 py-4">{{ $ticket->user->name }}</td>
                                 <td class="px-6 py-4 capitalize">{{ $ticket->priority }}</td>
                                 <td class="px-6 py-4">
                                     @php
