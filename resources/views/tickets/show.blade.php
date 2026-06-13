@@ -84,7 +84,7 @@
                 <p class="text-xs uppercase tracking-wide text-neutral-500 mt-5">Conversation</p>
 
                 <div class="mt-3 space-y-2">
-                    @forelse ($ticket->comments as $comment)
+                    @forelse ($ticket->comments->sortByDesc('created_at')->take(6) as $comment)
                         @if ($comment->user?->role === 'admin')
                             <div class="bg-blue-500/10 border border-blue-500/20 rounded-md p-3">
                                 <p class="text-xs text-blue-400">
