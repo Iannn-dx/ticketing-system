@@ -10,10 +10,13 @@ use Illuminate\View\View;
 
 class TicketController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $tickets = auth()->user()->tickets()->latest()->paginate(10);
-        
+        $search = $request->input('search');
+
+        $tickets = auth()->user()->tickets()->when($search, function($query, $search){
+            $query->where('subject', 'like', "%{$search}%")->orWhere('status', 'like', "%{$search}%")->orWhere('priority', 'like', "%{$search}%");
+        })->latest()->paginate(10)->withQueryString();
 
         return view('tickets.index', compact('tickets'));
     }
