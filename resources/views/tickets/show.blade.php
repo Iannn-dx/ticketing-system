@@ -62,24 +62,33 @@
                             <i data-lucide="arrow-left"></i>
                         </button>
 
-                        <img :src="image" class="max-h-[70vh] w-auto mx-auto rounded-lg shadow-lg object-contain">
+                        <img :src="image"
+                            class="max-h-[70vh] w-auto mx-auto rounded-lg shadow-lg object-contain">
 
                     </div>
                 </div>
             </div>
 
             <div>
-                <form action="{{ route('comments.store', $ticket) }}" method="POST" class="mt-4">
-                    @csrf
+                @if ($ticket->status !== 'closed')
+                    <form action="{{ route('comments.store', $ticket) }}" method="POST">
+                        @csrf
 
-                    <textarea name="comment" rows="3" class="w-full rounded-md border border-neutral-700 bg-neutral-900 text-white"
-                        placeholder="Write a reply..." required></textarea>
+                        <textarea name="comment" rows="4"
+                            class="w-full rounded-md bg-neutral-800 border border-neutral-700 text-white text-sm p-3" required></textarea>
 
-                    <button type="submit"
-                        class="mt-2 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500">
-                        Send Reply
-                    </button>
-                </form>
+                        <div class="flex justify-end mt-2">
+                            <button type="submit"
+                                class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-500 text-white rounded-md">
+                                Send Reply
+                            </button>
+                        </div>
+                    </form>
+                @else
+                    <div class="text-sm text-red-400 bg-red-500/10 p-3 rounded-md">
+                        This ticket is closed. Replies are disabled.
+                    </div>
+                @endif
 
                 <p class="text-xs uppercase tracking-wide text-neutral-500 mt-5">Conversation</p>
 

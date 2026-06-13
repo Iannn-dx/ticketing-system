@@ -30,6 +30,13 @@ class CommentController extends Controller
      */
   public function store(Request $request, Ticket $ticket): RedirectResponse
     {
+
+        if ($ticket->status === 'closed') {
+            return back()->withErrors([
+            'comment' => 'This ticket is closed. You cannot reply.'
+        ]);
+    }
+
         $request->validate([
             'comment' => ['required', 'string', 'max:25'],
         ],

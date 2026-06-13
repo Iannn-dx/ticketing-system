@@ -64,12 +64,22 @@ class TicketController extends Controller
     {
         $this->authorizeOwner($ticket);
 
+        if ($ticket->status === 'closed') {
+            abort(403, 'This ticket is closed and cannot be edited.');
+        }
+
         return view('tickets.edit', compact('ticket'));
     }
 
     public function update(Request $request, Ticket $ticket): RedirectResponse
     {
         $this->authorizeOwner($ticket);
+
+        if ($ticket->status === 'closed') {
+            return back()->withErrors([
+                'ticket' => 'This ticket is closed and cannot be edited.'
+            ]);
+        }
 
         $ticket->update($request->validate($this->ticketRules()));
 
