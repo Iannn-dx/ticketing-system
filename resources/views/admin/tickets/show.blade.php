@@ -133,7 +133,7 @@
 
 
                 <div class="space-y-2">
-                    @foreach ($ticket->comments as $comment)
+                    @foreach ($ticket->comments->sortByDesc('created_at')->take(6) as $comment)
                         @if ($comment->user->role === 'admin')
                             <div class="bg-blue-500/10 border border-blue-900/20 rounded-md p-3">
                                 <p class="text-xs text-blue-400">
