@@ -4,7 +4,24 @@
     </x-slot>
 
     <div class="mx-auto max-w-7xl space-y-7">
+        <div class="flex justify-content-end">
+            <form method="GET" class="flex ml-auto">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search tickets..."
+                    class="h-10 w-64 rounded-l-md border border-r-0 border-neutral-700 bg-neutral-900 px-3 text-sm text-white focus:outline-none">
 
+                @if (request('search'))
+                    <a href="{{ url()->current() }}"
+                        class="flex h-10 items-center rounded-r-md border border-red-600 bg-red-600 px-4 text-sm font-bold text-white hover:bg-red-700">
+                        ✕
+                    </a>
+                @else
+                    <button type="submit"
+                        class="h-10 rounded-r-md border border-blue-600 bg-blue-600 px-4 text-sm font-medium text-white hover:bg-blue-700">
+                        Search
+                    </button>
+                @endif
+            </form>
+        </div>
         <div class="dash-card overflow-hidden p-0">
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
@@ -106,10 +123,12 @@
                         @endforeach
                     </tbody>
                 </table>
-                <div class="flex flex-col gap-3 border-t border-neutral-800 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <div
+                    class="flex flex-col gap-3 border-t border-neutral-800 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
                     <p class="text-sm text-neutral-400">
                         @if ($tickets->total() > 0)
-                            Showing {{ $tickets->firstItem() }} to {{ $tickets->lastItem() }} of {{ $tickets->total() }} tickets
+                            Showing {{ $tickets->firstItem() }} to {{ $tickets->lastItem() }} of
+                            {{ $tickets->total() }} tickets
                         @else
                             No tickets found
                         @endif

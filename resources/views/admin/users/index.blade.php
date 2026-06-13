@@ -5,11 +5,33 @@
 
     <div class="mx-auto max-w-7xl space-y-7">
         <div class="flex items-center justify-between">
-            <p class="text-sm text-neutral-400">View and manage accounts.</p>
-            <a href="{{ route('admin.users.create') }}"
-                class="rounded-md bg-neutral-200 px-4 py-2 text-sm font-semibold text-black transition hover:bg-white">
-                Add account
-            </a>
+            <p class="text-sm text-neutral-400">
+                View and manage accounts.
+            </p>
+
+            <div class="flex items-center gap-3">
+                <form method="GET" class="flex">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search users..."
+                        class="h-10 w-64 rounded-l-md border border-r-0 border-neutral-700 bg-neutral-900 px-3 text-sm text-white focus:outline-none">
+
+                    @if (request('search'))
+                        <a href="{{ url()->current() }}"
+                            class="flex h-10 items-center rounded-r-md border border-red-600 bg-red-600 px-4 text-sm font-bold text-white hover:bg-red-700">
+                            ✕
+                        </a>
+                    @else
+                        <button type="submit"
+                            class="h-10 rounded-r-md border border-blue-600 bg-blue-600 px-4 text-sm font-medium text-white hover:bg-blue-700">
+                            Search
+                        </button>
+                    @endif
+                </form>
+
+                <a href="{{ route('admin.users.create') }}"
+                    class="rounded-md bg-neutral-200 px-4 py-2 text-sm font-semibold text-black transition hover:bg-white">
+                    Add Account
+                </a>
+            </div>
         </div>
         <div class="dash-card overflow-hidden p-0">
             <div class="overflow-x-auto">
