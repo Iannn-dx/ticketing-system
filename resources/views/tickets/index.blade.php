@@ -4,12 +4,35 @@
     </x-slot>
 
     <div class="mx-auto max-w-6xl space-y-6">
-        <div class="flex items-center justify-between">
-            <p class="text-sm text-neutral-400">View and manage your support tickets.</p>
-            <a href="{{ route('tickets.create') }}"
-                class="rounded-md bg-neutral-200 px-4 py-2 text-sm font-semibold text-black transition hover:bg-white">
-                Create Ticket
-            </a>
+        <div class="flex items-center justify-between gap-4">
+            <!-- Left side -->
+            <div>
+                <p class="text-sm text-neutral-400">
+                    View and manage your support tickets.
+                </p>
+
+                <a href="{{ route('tickets.create') }}"
+                    class="mt-2 inline-block rounded-md bg-neutral-200 px-4 py-2 text-sm font-semibold text-black transition hover:bg-white">
+                    Create Ticket
+                </a>
+            </div>
+
+            <form method="GET" class="flex">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search your tickets..."
+                    class="h-10 w-64 rounded-l-md border border-r-0 border-neutral-700 bg-neutral-900 px-3 text-sm text-white focus:outline-none">
+
+                @if (request('search'))
+                    <a href="{{ url()->current() }}"
+                        class="flex h-10 items-center rounded-r-md border border-red-600 bg-red-600 px-4 text-sm font-bold text-white hover:bg-red-700">
+                        ✕
+                    </a>
+                @else
+                    <button type="submit"
+                        class="h-10 rounded-r-md border border-blue-600 bg-blue-600 px-4 text-sm font-medium text-white hover:bg-blue-700">
+                        Search
+                    </button>
+                @endif
+            </form>
         </div>
 
         @if ($tickets->isEmpty())
@@ -41,7 +64,21 @@
                                             {{ $ticket->subject }}
                                         </a>
                                     </td>
-                                    <td class="px-6 py-4 capitalize">{{ str_replace('_', ' ', $ticket->status) }}</td>
+                                    <td class="px-6 py-4 capitalize">
+                                        @php
+                                            $status = $ticket->status;
+                                        @endphp
+
+                                        <span
+                                            class="inline-flex items-center text-xs font-medium px-3 py-1 rounded-full text-white
+                                        @if ($status === 'open') bg-green-700
+                                        @elseif($status === 'in_progress') bg-blue-700
+                                        @elseif($status === 'closed') bg-red-700
+                                        @else bg-gray-700 @endif
+                                        ">
+                                            {{ str_replace('_', ' ', $status) }}
+                                        </span>
+                                    </td>
                                     <td class="px-6 py-4 capitalize">{{ $ticket->priority }}</td>
                                     <td class="px-6 py-4">{{ $ticket->created_at->format('M j, Y') }}</td>
                                     <td class="px-6 py-4">
